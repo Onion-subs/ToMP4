@@ -13,6 +13,38 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+background-color: '#282b30';
+}
+QWidget {
+background-color: '#282b30';
+color: '#d7ddde';
+}
+QLineEdit{
+border-radius: 2px;
+background-color: '#484b52';
+padding: 4px;
+}
+QComboBox {
+border-radius: 2px;
+background-color: '#484b52';
+padding: 4px;
+}
+QPushButton{
+border-radius: 2px;
+background-color: '#7289da';
+color: white;
+font-weight: bold;
+padding: 6px;
+}</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>

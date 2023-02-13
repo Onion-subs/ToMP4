@@ -122,6 +122,8 @@ class AppWindow(QtWidgets.QMainWindow):
 
         if self.withSub.isChecked():
             map_legenda = '-c:s srt -map v:0 -map a -map 1:0'
+            subDir = subDir.replace("/" , '//')
+            subDir = subDir.replace(":" , "\\\:")
             print(subDir)
             print('7.1')
         else:
@@ -139,48 +141,97 @@ class AppWindow(QtWidgets.QMainWindow):
         print('9')
 
         if self.withSub.isChecked():
-            if self.withAudio.isChecked():
-                '''Execução'''
-                print('10')
-                print(ffmpeg)
-                print(videoDir)
-                print(outputDir)
-                print(subDir)
-                print(codec_video)
-                print(crf)
-                print(preset)
-                print(codec_audio)
-                print(bitrate_audio)
-                print(debug)
-                print(map_legenda)
-                print(arquivo_saida)
-                command = f'{ffmpeg} -i "{videoDir}" -i "{subDir}" {codec_video} {crf} {preset} {codec_audio} {bitrate_audio} {debug} {map_legenda} "{arquivo_saida}"'
-                print('11')
-                print("com legenda com audio")
-                try:
-                    subprocess.call(command)
-                except:
-                    print('Algo deu errado')
+            if str(self.chooseSubFormat.currentText()) == 'SRT':
+                if self.withAudio.isChecked():
+                    '''Execução'''
+                    print('10')
+                    print(ffmpeg)
+                    print(videoDir)
+                    print(outputDir)
+                    print(subDir)
+                    print(codec_video)
+                    print(crf)
+                    print(preset)
+                    print(codec_audio)
+                    print(bitrate_audio)
+                    print(debug)
+                    print(map_legenda)
+                    print(arquivo_saida)
+                    command = f'{ffmpeg} -i "{videoDir}" -vf "subtitles="{subDir}"" {codec_video} {crf} {preset} {codec_audio} {bitrate_audio} {debug} "{arquivo_saida}"'
+                    # command = {ffmpeg} +" -i " + f'"{videoDir}" ' + '-vf ' + '"subtitles=' + f'"{subDir}"" ' + {codec_video} + " " + {crf} + " " + {preset} + " " + {codec_audio} + " " + {bitrate_audio} + " " + {debug} + " " + f'"{arquivo_saida}"'
+                    print('11')
+                    print("com legenda .srt com audio")
+                    print(command)
+                    try:
+                        subprocess.call(command)
+                    except:
+                        print('Algo deu errado')
+                else:
+                    '''Execução'''
+                    print('10')
+                    print(ffmpeg)
+                    print(videoDir)
+                    print(outputDir)
+                    print(subDir)
+                    print(codec_video)
+                    print(crf)
+                    print(preset)
+                    print(debug)
+                    print(map_legenda)
+                    print(arquivo_saida)
+                    command = f'{ffmpeg} -i "{videoDir}" -vf "subtitles="{subDir}"" {codec_video} -an {crf} {preset} {debug} "{arquivo_saida}"'
+                    print("com legenda .srt sem audio")
+                    print('11')
+                    print(command)
+                    try:
+                        subprocess.call(command)
+                    except:
+                        print('Algo deu errado')
             else:
-                '''Execução'''
-                print('10')
-                print(ffmpeg)
-                print(videoDir)
-                print(outputDir)
-                print(subDir)
-                print(codec_video)
-                print(crf)
-                print(preset)
-                print(debug)
-                print(map_legenda)
-                print(arquivo_saida)
-                command = f'{ffmpeg} -i "{videoDir}" -i "{subDir}" {codec_video} -an {crf} {preset} {debug} {map_legenda} "{arquivo_saida}"'
-                print("com legenda sem audio")
-                print('11')
-                try:
-                    subprocess.call(command)
-                except:
-                    print('Algo deu errado')
+                if self.withAudio.isChecked():
+                    '''Execução'''
+                    print('10')
+                    print(ffmpeg)
+                    print(videoDir)
+                    print(outputDir)
+                    print(subDir)
+                    print(codec_video)
+                    print(crf)
+                    print(preset)
+                    print(codec_audio)
+                    print(bitrate_audio)
+                    print(debug)
+                    print(map_legenda)
+                    print(arquivo_saida)
+                    command = f'{ffmpeg} -i "{videoDir}" -vf "ass="{subDir}"" {codec_video} {crf} {preset} {codec_audio} {bitrate_audio} {debug} "{arquivo_saida}"'
+                    # command = {ffmpeg} +" -i " + f'"{videoDir}" ' + '-vf ' + '"ass=' + f'"{subDir}"" ' + {codec_video} + " " + {crf} + " " + {preset} + " " + {codec_audio} + " " + {bitrate_audio} + " " + {debug} + " " + f'"{arquivo_saida}"'
+                    print('11')
+                    print("com legenda .ass com audio")
+                    print(command)
+                    try:
+                        subprocess.call(command)
+                    except:
+                        print('Algo deu errado')
+                else:
+                    '''Execução'''
+                    print('10')
+                    print(ffmpeg)
+                    print(videoDir)
+                    print(outputDir)
+                    print(subDir)
+                    print(codec_video)
+                    print(crf)
+                    print(preset)
+                    print(debug)
+                    print(map_legenda)
+                    print(arquivo_saida)
+                    command = f'{ffmpeg} -i "{videoDir}" -vf "ass="{subDir}"" {codec_video} -an {crf} {preset} {debug} "{arquivo_saida}"'
+                    print("com legenda .ass sem audio")
+                    print('11')
+                    try:
+                        subprocess.call(command)
+                    except:
+                        print('Algo deu errado')
         else: 
             if self.withAudio.isChecked():
                 '''Execução'''
