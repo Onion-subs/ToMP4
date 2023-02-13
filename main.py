@@ -2,9 +2,26 @@ import sys
 import os
 import subprocess
 from PyQt6.QtWidgets import QDialog, QApplication, QFileDialog
-from PyQt6 import QtWidgets, uic
-from PyQt6 import QtGui
+from PyQt6 import QtWidgets, uic, QtGui
 from pymediainfo import MediaInfo
+from pypresence import Presence
+import time
+
+try:
+    RPC = Presence("1074502796029743144")
+    RPC.connect()
+
+    RPC.update(
+        details='convertendo para .MP4',
+        large_image='onion1',
+        large_text='Onion Subs',
+        small_image='heart',
+        start=time.time(),
+        buttons=[{"label": "Onion Subs", "url": "https://site.onionsubs.repl.co"}, {"label": "Repo", "url": "https://github.com/Onion-subs/ToMP4"}])
+    print('Online')
+except Exception as e: 
+        print(e)
+
 
 global ffmpeg
 
@@ -20,8 +37,8 @@ class AppWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('main.ui', self)
-        self.setWindowTitle('toMP4 V0.1.1 - Mayhm')
-        self.setWindowIcon(QtGui.QIcon('assets/ico2.png'))
+        self.setWindowTitle('toMP4 - V1.0')
+        self.setWindowIcon(QtGui.QIcon('assets/icon.png'))
 
         self.findVideoDir.clicked.connect(self.pyFindVideoDir)
         self.findSubDir.clicked.connect(self.pyFindSubDir)
@@ -157,7 +174,7 @@ class AppWindow(QtWidgets.QMainWindow):
                 print(debug)
                 print(map_legenda)
                 print(arquivo_saida)
-                command = f'{ffmpeg} -i "{videoDir}" -i "{subDir}" {codec_video} {crf} {preset} {debug} {map_legenda} "{arquivo_saida}"'
+                command = f'{ffmpeg} -i "{videoDir}" -i "{subDir}" {codec_video} -an {crf} {preset} {debug} {map_legenda} "{arquivo_saida}"'
                 print("com legenda sem audio")
                 print('11')
                 try:
@@ -198,7 +215,7 @@ class AppWindow(QtWidgets.QMainWindow):
                 print(preset)
                 print(debug)
                 print(arquivo_saida)
-                command = f'{ffmpeg} -i "{videoDir}" {codec_video} {crf} {preset} {debug} "{arquivo_saida}"'
+                command = f'{ffmpeg} -i "{videoDir}" {codec_video} -an {crf} {preset} {debug} "{arquivo_saida}"'
                 print('11')
                 print("sem legenda e sem audio")
                 print(command)
